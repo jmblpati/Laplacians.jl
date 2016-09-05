@@ -16,7 +16,7 @@ function samplingLDL{Tv,Ti}(a::SparseMatrixCSC{Tv,Ti})
     n = a.n
     eps = 0.1
     rho::Tv = ceil(0.2 * log(n) ^ 2 / eps ^ 2)
-    ord = randperm(64);
+    ord = randperm(n);
     a = a[ord,ord]
 
     auxVal = zeros(Tv, n)                       # used to sum weights from multiedges
