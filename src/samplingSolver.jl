@@ -26,7 +26,7 @@ function samplingLDL{Tv,Ti}(a::SparseMatrixCSC{Tv,Ti})
     multNeigh = zeros(Tv, n)
     indNeigh = zeros(Ti, n)
     asdfg = 0
-    u = spzeros(n,n) 
+    l = spzeros(n,n) 
     d = zeros(Tv, n)                           
 
     # neigh[i] = the list of neighbors for vertex i with their corresponding weights
@@ -59,9 +59,9 @@ function samplingLDL{Tv,Ti}(a::SparseMatrixCSC{Tv,Ti})
 
         # need to divide weights by the diagonal entry
         for j in 1:numPurged
-	    u[indNeigh[j],i] = -wNeigh[j] / wSum
+	    l[indNeigh[j],i] = -wNeigh[j] / wSum
         end
-	u[i,i] = 1	
+	l[i,i] = 1	
         d[i] = wSum
 
         multSum = ceil(Int64, multSum)
@@ -100,8 +100,8 @@ function samplingLDL{Tv,Ti}(a::SparseMatrixCSC{Tv,Ti})
         end  
     end
 
-    u[n,n] = 1
+    l[n,n] = 1
     d[n] = 0
-    return u, d, ord
+    return l, d, ord
 end
 
